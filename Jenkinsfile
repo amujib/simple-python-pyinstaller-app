@@ -1,7 +1,7 @@
 node {
     checkout scm
-    stage('Build') {
-        docker.image('python:2-alpine').inside {
+    docker.image('python:2-alpine').inside {
+        stage('Build') {
             sh 'python -m py_compile sources/add2vals.py sources/calc.py'
         }
     }
@@ -23,11 +23,11 @@ node {
         docker.image('qnib/pytest').inside {
             try {
                 sh 'pyinstaller --onefile sources/add2vals.py'
+                archiveArtifacts 'dist/add2vals'
             }
             catch(Exception e) {
                 
             }
-            archiveArtifacts 'dist/add2vals'
         }
     }
 }
