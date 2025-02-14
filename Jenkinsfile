@@ -20,6 +20,14 @@ node {
         }
     }
     stage('Deliver') {
-
+        docker.image('qnib/pytest').inside {
+            try {
+                sh 'pyinstaller --onefile sources/add2vals.py'
+            }
+            catch(Exception e) {
+                
+            }
+            archiveArtifacts 'dist/add2vals'
+        }
     }
 }
