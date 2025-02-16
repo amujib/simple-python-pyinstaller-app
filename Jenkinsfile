@@ -20,7 +20,7 @@ node {
         }
     }
     stage('Deliver') {
-        docker.image('cdrx/pyinstaller-linux:python2').inside() {
+        docker.image('cdrx/pyinstaller-linux:python2').inside('-u 0:0 --entrypoint="" -e PATH="/root/.pyenv/shims:/root/.pyenv/bin:$PATH"') {
             sh 'pyinstaller --onefile sources/add2vals.py'
         }
     }
