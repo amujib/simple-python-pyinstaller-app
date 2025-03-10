@@ -19,7 +19,10 @@ node {
             
         }
     }
+    stage ("Manual Approval") {
+        input 'Lanjutkan ke tahap Deploy?'
+    }
     stage ("Deploy") {
-        sleep(60)
+        sleep 60
     }
 }
