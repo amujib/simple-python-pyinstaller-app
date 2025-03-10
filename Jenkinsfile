@@ -23,6 +23,19 @@ node {
         input 'Lanjutkan ke tahap Deploy?'
     }
     stage ("Deploy") {
+        docker.image('cdrx/pyinstaller-linux:python2').inside('-u 0:0 --entrypoint="" -e PATH="/root/.pyenv/shims:/root/.pyenv/bin:$PATH"') {
+            try {
+                sh 'pyinstaller --onefile sources/add2vals.py'
+            }
+            catch(Exception e) {
+
+            }
+        }
+        withCredentials([sshUserPrivateKey(credentialsId: 'c86ddcb3-cc94-4b96-9c71-88f5cb257d10', keyFileVariable: 'SSH_KEY')]) {
+            sh '''
+            scp -i $SSH_KEY dist/add2vals 74.48.19.195:/opt/submission
+            '''
+        }
         sleep 60
     }
 }
