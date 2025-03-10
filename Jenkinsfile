@@ -19,15 +19,7 @@ node {
             
         }
     }
-    stage('Deliver') {
-        docker.image('cdrx/pyinstaller-linux:python2').inside('-u 0:0 --entrypoint="" -e PATH="/root/.pyenv/shims:/root/.pyenv/bin:$PATH"') {
-            try {
-                sh 'pyinstaller --onefile sources/add2vals.py'
-            }
-            catch(Exception e) {
-
-            }
-            archiveArtifacts 'dist/add2vals'
-        }
+    stage ("Deploy") {
+        sleep(60)
     }
 }
